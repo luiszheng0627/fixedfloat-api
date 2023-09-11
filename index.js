@@ -91,7 +91,7 @@ class FixedFloat {
    */
   async getCurrencies() {
     const {data} = await this._client.post('/ccies');
-    return data;
+    return data.data;
   }
 
   /**
@@ -119,7 +119,7 @@ class FixedFloat {
         afftax: this.afftax,
       }
     );
-    return data;
+    return data.data;
   }
 
   /**
@@ -129,7 +129,7 @@ class FixedFloat {
    */
   async getOrder(id, token) {
     const {data} = await this._client.post('/order', {id, token});
-    return data
+    return data.data;
   }
 
   /**
@@ -141,7 +141,7 @@ class FixedFloat {
    */
   async setEmergency(id, token, choice, address) {
     const {data} = await this._client.post('/emergency', {id, token, choice, address});
-    return data;
+    return data.data;
   }
 
   /**
@@ -173,7 +173,7 @@ class FixedFloat {
       }
     );
 
-    return data;
+    return data.data;
   }
 }
 
