@@ -101,7 +101,7 @@ class FixedFloat {
     const {amount, direction} = this._calcAmtAndDir(fromAmt, toAmt);
 
     const {data} = await this._client.post(
-      'price',
+      '/price',
       _.omitBy({
         type,
         fromCcy, toCcy,
