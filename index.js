@@ -3,14 +3,13 @@ const _ = require("lodash");
 const axios = require('axios');
 
 const STATES = [
-  'Transaction expected',
-  'The transaction is waiting for the required number of confirmations',
-  'Currency exchange',
-  'Sending funds',
-  'Completed',
-  'Expired',
-  'Not currently in use',
-  'A decision must be made to proceed with the order'
+  'NEW', // 0
+  'PENDING', // 1
+  'EXCHANGE', // 2
+  'WITHDRAW', // 3
+  'DONE', // 4
+  'EXPIRED', // 5
+  'EMERGENCY', // 6
 ];
 
 class FixedFloat {
@@ -48,11 +47,6 @@ class FixedFloat {
         const {msg, code} = resp.data;
         if (code !== 0 || msg !== 'OK') {
           throw new Error(`Error ${code}: ${msg}`);
-        }
-
-        const status = _.get(resp.data, 'data.status');
-        if (!_.isEmpty(status)) {
-          _.set(resp, 'data.data.statusText', STATES[status]);
         }
         return resp;
       },
