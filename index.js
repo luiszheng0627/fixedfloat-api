@@ -43,17 +43,23 @@ class FixedFloat {
       _.set(config, 'data', refineBody)
       return config
     });
-    this._client.interceptors.response.use((resp) => {
-      const data = _.get(resp, 'data.data');
-      const {status, msg, code} = data;
-      if (code !== 0 || msg !== 'OK') {
-        throw new Error(`Error ${code}: ${msg}`);
+    this._client.interceptors.response.use(
+      (resp) => {
+        const data = _.get(resp, 'data.data');
+        const {status, msg, code} = data;
+        if (code !== 0 || msg !== 'OK') {
+          throw new Error(`Error ${code}: ${msg}`);
+        }
+        if (!_.isEmpty(status)) {
+          _.set(resp, 'data.data.statusText', STATES[status]);
+        }
+        return resp;
+      },
+      (err) => {
+        console.dir(err)
+        throw err
       }
-      if (!_.isEmpty(status)) {
-        _.set(resp, 'data.data.statusText', STATES[status]);
-      }
-      return resp;
-    });
+    );
 
     if (affiliate !== undefined) {
       this.refcode = affiliate.refcode;
@@ -160,6 +166,7 @@ class FixedFloat {
         type, tag,
         fromCcy, toCcy,
         amount, direction,
+        toAddress,
         refcode: this.refcode,
         afftax: this.afftax,
       }
