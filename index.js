@@ -45,11 +45,12 @@ class FixedFloat {
     });
     this._client.interceptors.response.use(
       (resp) => {
-        const data = _.get(resp, 'data.data');
-        const {status, msg, code} = data;
+        const {msg, code} = resp.data;
         if (code !== 0 || msg !== 'OK') {
           throw new Error(`Error ${code}: ${msg}`);
         }
+
+        const status = _.get(resp.data, 'data.status');
         if (!_.isEmpty(status)) {
           _.set(resp, 'data.data.statusText', STATES[status]);
         }
