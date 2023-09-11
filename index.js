@@ -31,7 +31,8 @@ class FixedFloat {
       }
     })
     this._client.interceptors.request.use((config) => {
-      const bodyStr = _.isEmpty(config.data) ? '' : new URLSearchParams(config.data).toString();
+      const refineBody = _.isEmpty(config.data) ? '' : _.omitBy(config.data, _.identity);
+      const bodyStr = _.isEmpty(conrefineBody) ? '' : JSON.stringify(refineBody).toString();
       _.set(
         config.headers,
         'X-API-SIGN',
@@ -39,6 +40,7 @@ class FixedFloat {
           .update(bodyStr)
           .digest('hex')
       );
+      _.set(config, 'data', refineBody)
       return config
     });
     this._client.interceptors.response.use((resp) => {
@@ -102,13 +104,13 @@ class FixedFloat {
 
     const {data} = await this._client.post(
       '/price',
-      _.omitBy({
+      {
         type,
         fromCcy, toCcy,
         amount, direction,
         refcode: this.refcode,
         afftax: this.afftax,
-      })
+      }
     );
     return data;
   }
@@ -154,13 +156,13 @@ class FixedFloat {
 
     const {data} = await this._client.post(
       '/create',
-      _.omitBy({
+      {
         type, tag,
         fromCcy, toCcy,
         amount, direction,
         refcode: this.refcode,
         afftax: this.afftax,
-      }, _.identity)
+      }
     );
 
     return data;
