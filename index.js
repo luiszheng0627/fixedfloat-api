@@ -2,16 +2,6 @@ const crypto = require('crypto');
 const _ = require("lodash");
 const axios = require('axios');
 
-const STATES = [
-  'NEW', // 0
-  'PENDING', // 1
-  'EXCHANGE', // 2
-  'WITHDRAW', // 3
-  'DONE', // 4
-  'EXPIRED', // 5
-  'EMERGENCY', // 6
-];
-
 class FixedFloat {
   /**
    * Main API class
