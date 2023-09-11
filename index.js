@@ -32,7 +32,7 @@ class FixedFloat {
     })
     this._client.interceptors.request.use((config) => {
       const refineBody = _.isEmpty(config.data) ? undefined : _.pickBy(config.data, _.identity);
-      const bodyStr = _.isEmpty(refineBody) ? '' : new URLSearchParams(refineBody).toString();
+      const bodyStr = _.isEmpty(refineBody) ? '' : JSON.stringify(refineBody);
       _.set(
         config.headers,
         'X-API-SIGN',
