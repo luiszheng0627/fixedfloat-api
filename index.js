@@ -31,7 +31,7 @@ class FixedFloat {
       }
     })
     this._client.interceptors.request.use((config) => {
-      const bodyStr = _.isEmpty(config.data) ? '' : JSON.stringify(config.data);
+      const bodyStr = _.isEmpty(config.data) ? '' : new URLSearchParams(config.data).toString();
       _.set(
         config.headers,
         'X-API-SIGN',
