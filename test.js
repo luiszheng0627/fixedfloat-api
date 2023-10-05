@@ -1,7 +1,10 @@
-const FixedFloat = require('./'); // Change it to 'fixedfloat-api'
-const fixed = new FixedFloat('API_KEY', 'API_SECRET');
+require('dotenv').config();
+const FixedFloat = require("./index");
+describe('FF unit test', () => {
+    const fixed = new FixedFloat(process.env.API_KEY, process.env.API_SECRET);
 
-(async()=>{
-    const data = await fixed.getCurrencies();
-    console.log(data);
-})()
+    it ('Get currency', async () => {
+        const data = await fixed.getCurrencies();
+        console.log(data);
+    })
+})

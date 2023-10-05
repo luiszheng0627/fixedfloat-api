@@ -13,7 +13,7 @@ class FixedFloat {
   constructor(apiKey, secretKey, affiliate = undefined) {
     if (!apiKey || !secretKey) throw new Error('Please provide an API and secret keys');
     this._client = axios.create({
-      baseURL: 'https://fixedfloat.com/api/v2/',
+      baseURL: 'https://fixedfloat.com/api/v2',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'X-API-KEY': apiKey
